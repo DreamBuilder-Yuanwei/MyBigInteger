@@ -158,11 +158,18 @@ BigInteger BigInteger::operator - (const BigInteger& b) const {//减法运算
                 }
             }
         }
-        else{
-        int temp = d.s[i] - g;
-        if(temp != 0 || i != d.s.size() - 1)
-            c.s.push_back(temp);
-        g = 0;
+        else{//*************************fixed bug*************************
+            int temp = d.s[i] - g;
+            
+            if(temp < 0){
+                temp += BASE;
+                g = 1;
+            }
+            else
+                g = 0;
+            
+            if(temp != 0 || i != d.s.size() - 1)
+                c.s.push_back(temp);
         }
     }
     c.s[c.s.size() - 1] = c.s[c.s.size() - 1] * sign;//符号处理（将符号保存在最高“段”的数值中）
